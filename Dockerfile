@@ -36,4 +36,6 @@ ENV LANGUAGE en_US:en
 # Do some automatic Emacs installation/byte-compilation:
 RUN emacs --batch -l "${HOME}/.emacs"
 
+ENV PATH /home/coq/bin:/home/coq/.local/bin:${PATH}
+
 CMD ["/bin/bash"]
