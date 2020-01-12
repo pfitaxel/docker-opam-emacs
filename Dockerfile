@@ -38,4 +38,6 @@ RUN emacs --batch -l "${HOME}/.emacs"
 
 ENV PATH /home/coq/bin:/home/coq/.local/bin:${PATH}
 
+COPY --chown=coq:coq learn-ocaml-client-stub.sh /home/coq/.local/bin/learn-ocaml-client
+
 CMD ["/bin/bash"]
