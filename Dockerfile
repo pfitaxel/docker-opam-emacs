@@ -22,25 +22,10 @@ RUN ["/bin/bash", "--login", "-c", "set -x \
   && eval $(opam env) \
   && opam update -y \
   # BEGIN opam libs
-  && opam install -y -v -j ${NJOBS} ocamlfind"]
-
-# Installing learn-ocaml-client
-RUN git clone https://github.com/ocaml-sf/learn-ocaml.git  
-RUN sudo apt update 
-RUN sudo apt install libssl-dev libev-dev -y
-
-WORKDIR /home/coq/learn-ocaml 
-RUN opam install . --deps-only --locked -y 
-RUN opam install opam-installer -y 
-RUN eval $(opam env) && make && make opaminstall 
-RUN cp ~/.opam/4.05.0/bin/learn-ocaml-client /home/coq/.local/bin
-
-WORKDIR /home/coq
-RUN  rm -fr learn-ocaml 
-
-# End install
-RUN opam config list && opam repo list && opam list 
-RUN opam clean -a -c -s --logs
+  && opam install -y -v -j ${NJOBS} ocamlfind \
+  # TODO Manuel à compléter
+  && opam config list && opam repo list && opam list \
+  && opam clean -a -c -s --logs"]
 
 COPY --chown=coq:coq .emacs .emacs
 
