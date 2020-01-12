@@ -33,19 +33,10 @@ WORKDIR /home/coq/learn-ocaml
 RUN opam install . --deps-only --locked -y 
 RUN opam install opam-installer -y 
 RUN eval $(opam env) && make && make opaminstall 
-RUN sudo cp ~/.opam/4.05.0/bin/learn-ocaml* /home/coq/.local/bin
-RUN mkdir /home/coq/.local/share/ /home/coq/.local/share/learn-ocaml /home/coq/.local/share/learn-ocaml/www 
-RUN mv /home/coq/learn-ocaml/static/* /home/coq/.local/share/learn-ocaml/www/
-RUN sudo addgroup learn-ocaml
-RUN sudo adduser --ingroup learn-ocaml learn-ocaml
-RUN sudo mkdir /sync && sudo chown learn-ocaml:learn-ocaml /sync
-RUN sudo chmod 7777 /sync
-WORKDIR /home/coq
-VOLUME ["/repository"]
-VOLUME ["/sync"]
-EXPOSE 8080
-EXPOSE 8443
+RUN cp ~/.opam/4.05.0/bin/learn-ocaml-client /home/coq/.local/bin
 
+WORKDIR /home/coq
+RUN  rm -fr learn-ocaml 
 
 # End install
 RUN opam config list && opam repo list && opam list 
@@ -62,5 +53,4 @@ RUN emacs --batch -l "${HOME}/.emacs"
 
 ENV PATH /home/coq/bin:/home/coq/.local/bin:${PATH}
 
-CMD ["build","serve"]
-ENTRYPOINT ["learn-ocaml","--sync-dir=/sync","--repo=/repository"]
+CMD ["/bin/bash"]
