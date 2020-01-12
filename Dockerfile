@@ -39,6 +39,6 @@ ENV PATH /home/coq/bin:/home/coq/.local/bin:${PATH}
 COPY --chown=coq:coq learn-ocaml-client-stub.sh /home/coq/.local/bin/learn-ocaml-client
 
 # Do some automatic Emacs installation/byte-compilation:
-RUN emacs --batch -l "${HOME}/.emacs"
+RUN emacs --version && emacs --batch -l "${HOME}/.emacs"
 
 CMD ["/bin/bash"]
